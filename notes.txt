@@ -1,0 +1,14 @@
+notebook has two modes, command mode and edit mode.
+You can put yourself in command mode with the escape key.
+You can put yourself in edit mode with the enter key.
+
+%lsmagic    - will show you all your options.
+two %% will use the whole line as an argument.
+%pwd        - will show current working directory
+%ls         - will show files in directory
+
+**** keyboard shortcuts ****
+a               - Add cell above
+b               - Add cell below
+double tap d    - delete cell
+z               - undo
