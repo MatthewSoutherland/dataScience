@@ -1,22 +1,48 @@
-import numpy
-import pandas
+import numpy as np
+import pandas as pd
 
 
-def calculate_demographic_data(print_data=True):
+def calculate_demographic_data():
     # Read data from file
-    df = None
+    df = pd.read_csv("data.csv")
 
     # How many of each race are represented in this dataset? This should be a Pandas series with race names as the index labels.
-    race_count = None
+    race_count = len(df["race"].drop_duplicates())
 
     # What is the average age of men?
-    average_age_men = None
+    avg_men = df[df["sex"] == "Male"]
+    average_age_men = avg_men["age"].sum() / len(avg_men["age"])
 
     # What is the percentage of people who have a Bachelor's degree?
-    percentage_bachelors = None
+    a = len(df["education"])  # 32561
+    b = len(df[df["education"] == "Bachelors"])  # 5355
+    percentage_bachelors = len(df[df["education"] == "Bachelors"]) / len(
+        df["education"]
+    )
 
     # What percentage of people with advanced education (`Bachelors`, `Masters`, or `Doctorate`) make more than 50K?
+    a = df.loc[
+        (df["education"] == "Bachelors")
+        | (df["education"] == "Masters")
+        | (df["education"] == "Doctorate"),
+        ["education", "salary"],
+    ]
+    b = a.loc[a["salary"] == ">50K"]
+    percentage_of_advanced_education_over_50K = len(b) / len(a)
+
     # What percentage of people without advanced education make more than 50K?
+    c = df.loc[
+        (df["education"] != "Bachelors")
+        & (df["education"] != "Masters")
+        & (df["education"] != "Doctorate"),
+        ["education", "salary"],
+    ]
+    d = c.loc[c["salary"] == ">50K"]
+    percentage_of_without_education_over_50K = len(d) / len(c)
+    print(
+        percentage_of_without_education_over_50K,
+        percentage_of_advanced_education_over_50K,
+    )
 
     # with and without `Bachelors`, `Masters`, or `Doctorate`
     higher_education = None
@@ -43,6 +69,7 @@ def calculate_demographic_data(print_data=True):
 
     # DO NOT MODIFY BELOW THIS LINE
 
+    print_data = False
     if print_data:
         print("Number of each race:\n", race_count)
         print("Average age of men:", average_age_men)
@@ -63,15 +90,20 @@ def calculate_demographic_data(print_data=True):
         )
         print("Top occupations in India:", top_IN_occupation)
 
-    return {
-        "race_count": race_count,
-        "average_age_men": average_age_men,
-        "percentage_bachelors": percentage_bachelors,
-        "higher_education_rich": higher_education_rich,
-        "lower_education_rich": lower_education_rich,
-        "min_work_hours": min_work_hours,
-        "rich_percentage": rich_percentage,
-        "highest_earning_country": highest_earning_country,
-        "highest_earning_country_percentage": highest_earning_country_percentage,
-        "top_IN_occupation": top_IN_occupation,
-    }
+    # return {
+    #     "race_count": race_count,
+    #     "average_age_men": average_age_men,
+    #     "percentage_bachelors": percentage_bachelors,
+    #     "higher_education_rich": higher_education_rich,
+    #     "lower_education_rich": lower_education_rich,
+    #     "min_work_hours": min_work_hours,
+    #     "rich_percentage": rich_percentage,
+    #     "highest_earning_country": highest_earning_country,
+    #     "highest_earning_country_percentage": highest_earning_country_percentage,
+    #     "top_IN_occupation": top_IN_occupation,
+    # }
+
+    return True
+
+
+calculate_demographic_data()
