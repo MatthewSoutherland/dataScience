@@ -109,7 +109,5 @@ def calculate_demographic_data():
         "top_IN_occupation": top_IN_occupation,
     }
 
-    return True
-
 
 calculate_demographic_data()
