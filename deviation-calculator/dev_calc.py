@@ -27,7 +27,7 @@ def calculate(list):
         "min": minm,
         "sum": summ,
     }
-    print(myDic)
+
     return myDic
 
 
